@@ -1,0 +1,32 @@
+﻿<ContentDialog
+    x:Class="AudioEqualizer.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AudioEqualizer.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    BorderThickness="0"
+    CornerRadius="{StaticResource OverlayCornerRadius}"
+    PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d"
+    Title="About"
+    PrimaryButtonText="OK">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock>Audio Equalizer 0.0.0.1<LineBreak/>© 2021 onein528. All right reserved.</TextBlock>
+            <Grid Margin="0,8,0,0">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <HyperlinkButton Padding="2" NavigateUri="https://github.com/onein528/AudioEqualizer">
+                        <TextBlock>GitHub</TextBlock>
+                    </HyperlinkButton>
+                    <HyperlinkButton Padding="2" NavigateUri="https://github.com/onein528/AudioEqualizer/issues/new">
+                        <TextBlock>Send feedback</TextBlock>
+                    </HyperlinkButton>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

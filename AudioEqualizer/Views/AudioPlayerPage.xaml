@@ -1,0 +1,158 @@
+﻿<Page
+    x:Class="AudioEqualizer.Views.AudioPlayerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AudioEqualizer.Views"
+    xmlns:vm="using:AudioEqualizer.ViewModels"
+    xmlns:converter="using:AudioEqualizer.Converters"
+    xmlns:a="using:AudioVisualizer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
+
+    <Page.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="visibilityConverter"></converter:BooleanToVisibilityConverter>
+        <a:SourceConverter x:Key="source"></a:SourceConverter>
+        <a:SourceConverter x:Key="analogSource"></a:SourceConverter>
+        <a:SourceConverter x:Key="spectrumSource"></a:SourceConverter>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <a:CustomVisualizer
+            x:Name="Spectrum"
+            Source="{StaticResource source}"
+            CreateResources="Spectrum_CreateResources"
+            Draw="Spectrum_Draw"/>
+        <Grid Grid.Row="1" Margin="4,0,4,4">
+            <Border
+                Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                CornerRadius="4"
+                Padding="6,4,6,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="48"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Slider
+                            x:Name="AudioPositionSeekSlider"
+                            ValueChanged="AudioPositionSeekSlider_ValueChanged"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <!--<a:CustomVisualizer
+                            Source="{StaticResource source}"
+                            Draw="PositionDisplay_Draw" />-->
+                        <TextBlock
+                            x:Name="CurrentPlaybackPositionTextBlock"
+                            HorizontalAlignment="Left"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            Text="0:00:00"/>
+                        <TextBlock
+                            x:Name="TotalTimeTextBlock"
+                            HorizontalAlignment="Right"
+                            Style="{ThemeResource CaptionTextBlockStyle}"
+                            Text="0:00:00"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Button
+                                x:Name="VolumeButton"
+                                HorizontalAlignment="Left"
+                                Padding="0"
+                                BorderThickness="0"
+                                Height="32" Width="36"
+                                Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}">
+                                <Grid>
+                                    <FontIcon x:Name="VolumeButtonIcon" Glyph="&#xe767;" FontSize="16"/>
+                                    <FontIcon x:Name="VolumeButtonSecondaryIcon" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Glyph="&#xe767;" FontSize="16"/>
+                                </Grid>
+                                <Button.Flyout>
+                                    <Flyout>
+                                        <Flyout.FlyoutPresenterStyle>
+                                            <Style TargetType="FlyoutPresenter">
+                                                <Setter Property="Padding" Value="8,12"/>
+                                                <Setter Property="Margin" Value="4,0,0,0"/>
+                                                <Setter Property="CornerRadius" Value="6"/>
+                                            </Style>
+                                        </Flyout.FlyoutPresenterStyle>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="35"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button
+                                                x:Name="VolumeFlyoutButton"
+                                                HorizontalAlignment="Left"
+                                                Padding="0"
+                                                BorderThickness="0"
+                                                Height="32" Width="36"
+                                                Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
+                                                Click="VolumeFlyoutButton_Click">
+                                                <Grid>
+                                                    <FontIcon x:Name="VolumeFlyoutButtonIcon" Glyph="&#xe767;" FontSize="16"/>
+                                                    <FontIcon x:Name="VolumeFlyoutButtonSecondaryIcon" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Glyph="&#xe767;" FontSize="16"/>
+                                                </Grid>
+                                            </Button>
+                                            <Slider
+                                                x:Name="VolumeSlider"
+                                                Grid.Column="1"
+                                                Width="200"
+                                                Value="100"
+                                                Margin="2,0,0,0" ValueChanged="VolumeSlider_ValueChanged"/>
+                                            <TextBlock x:Name="VolumeFlyoutSizeTextBlock" Grid.Column="2" Text="100" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Button
+                                Click="PlayBackButton_Click"
+                                HorizontalAlignment="Center"
+                                Padding="0"
+                                BorderThickness="0"
+                                Height="32" Width="36"
+                                Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}">
+                                <FontIcon x:Name="PlayBackButtonIcon" Glyph="&#xf5b0;" FontSize="16"/>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button
+                                    HorizontalAlignment="Right"
+                                    Padding="0"
+                                    BorderThickness="0"
+                                    Height="32" Width="36"
+                                    Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}"
+                                    Click="EqualizerEditorButton_Click">
+                                    <FontIcon Glyph="&#xe9e9;" FontSize="16"/>
+                                </Button>
+                                <Button
+                                    HorizontalAlignment="Right"
+                                    Padding="0"
+                                    BorderThickness="0"
+                                    Height="32" Width="36"
+                                    Style="{ThemeResource CommandBarFlyoutEllipsisButtonStyle}">
+                                    <FontIcon Glyph="&#xec49;" FontSize="16"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>
