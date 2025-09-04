@@ -11,7 +11,7 @@
     <File Path="README.md" />
   </Folder>
 
-  <Project Path="AudioEqualizer/AudioEqualizer.csproj" Id="d0acbc33-89bc-48c0-9bcf-c7f6616ab1a5">
+  <Project Path="AudioVisualizer.UWP/AudioVisualizer.UWP.csproj" Id="d0acbc33-89bc-48c0-9bcf-c7f6616ab1a5">
     <Platform Solution="*|x86" Project="x86" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|ARM64" Project="ARM64" />
