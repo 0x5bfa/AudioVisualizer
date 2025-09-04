@@ -1,0 +1,49 @@
+# Copyright (c) 0x5BFA
+# Licensed under the MIT License. See the LICENSE.
+
+name: AudioVisualizer CI
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/assets/**'
+      - 'docs/**'
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '.github/assets/**'
+      - 'docs/**'
+      - '*.md'
+
+run-name: ${{ github.event_name == 'pull_request' && 'AudioVisualizer PR Validation' || 'AudioVisualizer CI Validation' }}
+
+env:
+  WORKING_DIR:         '${{ github.workspace }}' # 'D:\a\AudioVisualizer\AudioVisualizer'
+  SOLUTION_PATH:       '${{ github.workspace }}\AudioVisualizer.slnx'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+        platform: [x64, ARM64]
+    env:
+      CONFIGURATION: ${{ matrix.configuration }}
+      PLATFORM: ${{ matrix.platform }}
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+
+    - name: Build the solution
+      run: msbuild /restore $env:SOLUTION_PATH /p:Configuration=$env:CONFIGURATION /p:Platform=$env:PLATFORM

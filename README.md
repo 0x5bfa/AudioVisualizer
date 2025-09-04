@@ -1,4 +1,3 @@
-<p align="center"><img width="128" align="center" src="AudioEqualizer/Assets/AppTiles/StoreLogo.scale-400.png" /></p>
 <h1 align="center">Audio Equalizer/visualizer</h1>
 <p align="center">A UWP audio equalizer/visualizer for Windows</p>
 

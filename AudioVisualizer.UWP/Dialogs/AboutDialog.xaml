@@ -16,7 +16,7 @@
 
     <Grid>
         <StackPanel>
-            <TextBlock>Audio Equalizer 0.0.0.1<LineBreak/>© 2021 onein528. All right reserved.</TextBlock>
+            <TextBlock>Audio Visualizer 1.0.0<LineBreak/>© 2021 0x5FA. All right reserved.</TextBlock>
             <Grid Margin="0,8,0,0">
                 <StackPanel Orientation="Horizontal" Spacing="4">
                     <HyperlinkButton Padding="2" NavigateUri="https://github.com/onein528/AudioEqualizer">
